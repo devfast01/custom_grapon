@@ -626,9 +626,9 @@ object MediaStoreUtils {
                     val musicItem = MyItems(
                         id = dataObject.getInt("id"),
                         name = dataObject.getString("name"),
-                        artist = dataObject.getString("artist"),
-                        coverArtUrl = dataObject.getString("cover_art_url"),
-                        url = dataObject.getString("url"),
+                        artist = dataObject.getString("artistNames"),
+                        coverArtUrl = dataObject.getJSONObject("mainImage").getString("url"),
+                        url = dataObject.getJSONObject("audioFile").getString("url"),
                         duration = dataObject.getString("duration"),
                         date = dataObject.getString("date")
                     )
@@ -650,8 +650,10 @@ object MediaStoreUtils {
                                     .setArtist(musicItem.artist)
                                     .setArtworkUri(Uri.parse(musicItem.coverArtUrl))
                                     .setExtras(Bundle().apply {
-                                        putString("Author", musicItem.artist)
-                                        putLong("Duration",convertDurationStringToLong(musicItem.duration))
+                                        putLong(
+                                            "Duration",
+                                            convertDurationStringToLong(musicItem.duration)
+                                        )
                                     })
                                     .build()
                             ).build()
